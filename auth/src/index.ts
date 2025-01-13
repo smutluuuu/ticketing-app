@@ -5,6 +5,7 @@ import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
+import { errorHandler } from "./middlewares/error-handler";
 
 const app = express();
 app.use(json());
@@ -14,6 +15,8 @@ const routers = [currentUserRouter, signinRouter, signoutRouter, signupRouter];
 routers.forEach((router) => {
   app.use(router);
 });
+
+app.use(errorHandler);
 
 app.get("/api/users/currentuser", (req, res) => {
   res.send("Hi there !");
