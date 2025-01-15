@@ -10,6 +10,7 @@ import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
+import { DatabaseConnectionError } from "./errors/database-connection-error";
 
 const app = express();
 app.use(json());
@@ -29,7 +30,7 @@ const start = async () => {
     await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
     console.log("COnnected to mongodb");
   } catch (error) {
-    console.error(error);
+    throw new DatabaseConnectionError();
   }
 
   app.listen(3000, () => {
