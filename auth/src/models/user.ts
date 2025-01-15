@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+import { Password } from "../services/password";
 
 // An interface that describes the properties
 // that are required to create a new user
-// BURAYI NOT AL TYPESCRIPT 'I KONTROL ASAMASINA DAHIL EDEBILMEK ICIN BUNU YAPIYORUZ
 
 interface UserAttrs {
   email: string;
@@ -23,7 +23,7 @@ interface UserDoc extends mongoose.Document {
   password: string;
 }
 
-// MONGODB ŞEMASI
+// User Schema
 const userSchema = new Schema({
   email: {
     type: String,
@@ -34,7 +34,16 @@ const userSchema = new Schema({
     required: true,
   },
 });
-// KULLANICIYI BUILD EDEN FONSKIYON
+// A mongoose function which works before save and you should use at the end of function to continue
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    const hashed = await Password.hashPassword(this.get("password"));
+    this.set("password", hashed);
+  }
+  done();
+});
+
+// A function builds User
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
