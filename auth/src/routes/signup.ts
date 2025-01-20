@@ -33,7 +33,7 @@ router.post(
         id: user.id,
         email: user.email,
       },
-      "asdf"
+      process.env.JWT_KEY!
     );
 
     //Store it on session object
@@ -41,7 +41,7 @@ router.post(
       jwt: userJwt,
     };
 
-    res.status(201).send({ user });
+    res.status(201).send(user);
     return;
   }
 );
