@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Password } from "../services/password";
+import { PasswordManager } from "../services/password";
 import { transform } from "typescript";
 
 // An interface that describes the properties
@@ -25,31 +25,33 @@ interface UserDoc extends mongoose.Document {
 }
 
 // User Schema
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-}, 
-{
-  toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id;
-      delete ret._id;
-      delete ret.password;
-      delete ret.__v;
-      return ret;
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
     },
   },
-});
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+        delete ret.__v;
+        return ret;
+      },
+    },
+  }
+);
 // A mongoose function which works before save and you should use at the end of function to continue
 userSchema.pre("save", async function (done) {
   if (this.isModified("password")) {
-    const hashed = await Password.hashPassword(this.get("password"));
+    const hashed = await PasswordManager.hashPassword(this.get("password"));
     this.set("password", hashed);
   }
   done();
