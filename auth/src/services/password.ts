@@ -1,5 +1,3 @@
-import { scrypt, randomBytes } from "crypto";
-import { promisify } from "util";
 import bcrypt from "bcrypt";
 
 const saltRounds = 10;
