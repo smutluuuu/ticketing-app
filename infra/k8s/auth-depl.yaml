@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: auth
-          image:  smutluuuu/auth
-          env: 
+          image: smutluuuu/auth
+          env:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
