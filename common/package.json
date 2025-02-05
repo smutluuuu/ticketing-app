@@ -1,6 +1,6 @@
 {
   "name": "@tickets-sm/common",
-  "version": "1.0.7",
+  "version": "1.0.18",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -8,15 +8,17 @@
     "build/**/*"
   ],
   "scripts": {
-    "clean": "del ./build/*",
-    "build": "npm run clean && tsc",
-    "pub": "npm version patch && npm run build && npm publish"
+    "clean": "rimraf ./build",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "pub": "npm version patch && npm publish"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "del-cli": "^6.0.0",
+    "rimraf": "^6.0.1",
     "typescript": "^5.7.3"
   },
   "dependencies": {
@@ -28,6 +30,7 @@
     "cookie-session": "^2.1.0",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "node-nats-streaming": "^0.3.2"
   }
 }
