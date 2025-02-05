@@ -1,6 +1,6 @@
 {
   "name": "@tickets-sm/common",
-  "version": "1.0.18",
+  "version": "1.0.17",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -8,10 +8,9 @@
     "build/**/*"
   ],
   "scripts": {
-    "clean": "rimraf ./build",
-    "build": "tsc",
-    "prepublishOnly": "npm run build",
-    "pub": "npm version patch && npm publish"
+    "clean": "del ./build/*",
+    "build": "npm run clean && tsc",
+    "pub": "npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
