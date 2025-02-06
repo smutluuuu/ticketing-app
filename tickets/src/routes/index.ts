@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { Ticket } from "../models/ticket";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
